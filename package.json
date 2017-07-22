@@ -1,0 +1,7 @@
+{
+  "name": "TimeBox",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "prettier": "^1.5.3"
+  }
+}
