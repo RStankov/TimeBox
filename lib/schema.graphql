@@ -1,11 +1,13 @@
 type Query {
   allClients: [Client]!
+  allTimelogs: [TimeLog]!
 }
 
 type Mutation {
   createClient(input: CreateClientInput): CreateClientPayload
   updateClient(input: UpdateClientInput): UpdateClientPayload
   destroyClient(input: DestroyClientInput): DestroyClientPayload
+  createTimeLog(input: CreateTimeLogInput): CreateTimeLogPayload
 }
 
 input CreateClientInput {
@@ -36,6 +38,16 @@ type DestroyClientPayload {
   errors: [Error]!
 }
 
+input CreateTimeLogInput {
+  clientId: ID!
+  description: String!
+}
+
+type CreateTimeLogPayload {
+  node: TimeLog
+  errors: [Error]!
+}
+
 type Error {
   field: String!
   messages: [String]!
@@ -44,4 +56,12 @@ type Error {
 type Client {
   id: ID!
   name: String!
+  timeLogs: [TimeLog]!
+}
+
+type TimeLog {
+  id: ID!
+  description: String!
+  clientId: ID!
+  client: Client!
 }
