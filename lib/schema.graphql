@@ -1,6 +1,25 @@
 type Query {
-  allClients: [Client!]!
+  allClients: [Client]!
 }
+
+type Mutation {
+  createClient(input: CreateClientInput): CreateClientPayload
+}
+
+input CreateClientInput {
+  name: String!
+}
+
+type CreateClientPayload {
+  node: Client
+  errors: [Error]!
+}
+
+type Error {
+  field: String!
+  messages: [String]!
+}
+
 type Client {
   id: ID!
   name: String!
