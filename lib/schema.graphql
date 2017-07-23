@@ -4,6 +4,7 @@ type Query {
 
 type Mutation {
   createClient(input: CreateClientInput): CreateClientPayload
+  updateClient(input: UpdateClientInput): UpdateClientPayload
   destroyClient(input: DestroyClientInput): DestroyClientPayload
 }
 
@@ -12,6 +13,16 @@ input CreateClientInput {
 }
 
 type CreateClientPayload {
+  node: Client
+  errors: [Error]!
+}
+
+input UpdateClientInput {
+  id: ID!
+  name: String!
+}
+
+type UpdateClientPayload {
   node: Client
   errors: [Error]!
 }
