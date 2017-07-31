@@ -17,5 +17,11 @@ export default [{
   childRoutes: [{
     path: '/',
     getComponent: load(() => import('./pages/Dashboard')),
+  }, {
+    path: '/clients/new',
+    getComponent: load(() => import('./pages/NewClient')),
+  }, {
+    path: '/clients/:id',
+    getComponent: load(() => import('./pages/Client')),
   }]
 }];
