@@ -3,7 +3,7 @@ import { graphql, gql } from 'react-apollo';
 
 export function App({ data: { allClients, allTimeLogs } }) {
   return (
-    <main>
+    <article>
       <h1>Data</h1>
       <section>
         <h2>Clients</h2>
@@ -17,7 +17,7 @@ export function App({ data: { allClients, allTimeLogs } }) {
           {JSON.stringify(allTimeLogs)}
         </pre>
       </section>
-    </main>
+    </article>
   );
 }
 
