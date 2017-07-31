@@ -3,5 +3,13 @@
 set -e
 
 npm install -g yarn
-yarn install
+gem install foreman
+
+cd -
+
+cd server
+
+yarn
+
+cd -
 

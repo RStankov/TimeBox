@@ -8,6 +8,8 @@ type Mutation {
   updateClient(input: UpdateClientInput): UpdateClientPayload
   destroyClient(input: DestroyClientInput): DestroyClientPayload
   createTimeLog(input: CreateTimeLogInput): CreateTimeLogPayload
+  updateTimeLog(input: UpdateTimeLogInput): UpdateTimeLogPayload
+  destroyTimeLog(input: DestroyTimeLogInput): DestroyTimeLogPayload
 }
 
 input CreateClientInput {
@@ -44,6 +46,25 @@ input CreateTimeLogInput {
 }
 
 type CreateTimeLogPayload {
+  node: TimeLog
+  errors: [Error]!
+}
+
+input UpdateTimeLogInput {
+  id: ID!
+  description: String!
+}
+
+type UpdateTimeLogPayload {
+  node: TimeLog
+  errors: [Error]!
+}
+
+input DestroyTimeLogInput {
+  id: ID!
+}
+
+type DestroyTimeLogPayload {
   node: TimeLog
   errors: [Error]!
 }

@@ -7,7 +7,7 @@ const { createServer } = require('http');
 const createMongo = require('./createMongoConnection');
 const schema = require('./schema');
 
-module.exports = async () => {
+module.exports = async (port) => {
   const mongo = await createMongo();
 
   // TODO(rstankov): Move to middlewares
@@ -38,10 +38,9 @@ module.exports = async () => {
     }),
   );
 
-  const PORT = 3000; // TODO(rstankov): Convert to env variable
   const server = createServer(app);
-  server.listen(PORT, () => {
-    console.log(`Hackernews GraphQL server running on port ${PORT}.`);
+  server.listen(port, () => {
+    console.log(`Hackernews GraphQL server running on port ${port}.`);
   });
 
   return app;

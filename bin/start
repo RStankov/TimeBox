@@ -4,4 +4,4 @@ set -e
 
 docker-compose up -d --no-recreate
 
-yarn start
+foreman start

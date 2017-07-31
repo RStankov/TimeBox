@@ -53,6 +53,31 @@ module.exports = {
         errors: [],
       };
     },
+    updateTimeLog: async (_root, { input }, { mongo }) => {
+      // TODO(rstankov): Validation
+      // // TODO(rstankov): Remove `id` from input
+      const response = await mongo.TimeLogs.update(
+        { _id: mongo.id(input.id) },
+        { $set: input },
+      );
+
+      const client = await mongo.TimeLogs.findOne({ _id: mongo.id(input.id) });
+
+      return {
+        node: client,
+        errors: [],
+      };
+    },
+    destroyTimeLog: async (_root, { input }, { mongo }) => {
+      // TODO(rstankov): Validation
+      const response = await mongo.TimeLogs.deleteOne({
+        _id: mongo.id(input.id),
+      });
+
+      return {
+        errors: [],
+      };
+    },
   },
 
   Client: {

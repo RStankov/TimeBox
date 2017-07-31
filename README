@@ -1,0 +1,14 @@
+# TimeBox
+
+## Bootstrap
+
+```bash
+./bin/boot
+```
+
+
+## Run
+
+```bash
+./bin/start
+```

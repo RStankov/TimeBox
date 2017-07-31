@@ -1,3 +1,3 @@
 const createServer = require('./lib/createServer');
 
-createServer();
+createServer(process.env.PORT || 3000);
