@@ -17,6 +17,6 @@
     "node": "8.1.4"
   },
   "scripts": {
-    "start": "nodemon ./index.js"
+    "start": "nodemon ./src/index.js"
   }
 }
