@@ -8,16 +8,14 @@ import paths from 'paths';
 
 export function Layout({ children, data: { loading, allClients } }) {
   if (loading) {
-    return (
-      <Loader active inline='centered' />
-    );
+    return <Loader active inline="centered" />;
   }
 
   return (
     <Container fluid={false}>
       <Grid padded>
         <Grid.Row>
-          <Grid.Column width={4}>
+          <Grid.Column width={3}>
             <Menu fluid vertical size="massive">
               <Menu.Item header>
                 <Menu.Header>
@@ -36,11 +34,13 @@ export function Layout({ children, data: { loading, allClients } }) {
                   Clients
                 </Menu.Header>
                 <Menu.Menu>
-                  {allClients.map((client) => (
+                  {allClients.map(client =>
                     <Menu.Item active={true} key={client.id}>
-                      <Link to={paths.client(client)}>{client.name}</Link>
-                    </Menu.Item>
-                  ))}
+                      <Link to={paths.client(client)}>
+                        {client.name}
+                      </Link>
+                    </Menu.Item>,
+                  )}
                 </Menu.Menu>
               </Menu.Item>
             </Menu>
