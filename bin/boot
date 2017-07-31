@@ -13,3 +13,9 @@ yarn
 
 cd -
 
+cd client
+
+yarn
+
+cd -
+
