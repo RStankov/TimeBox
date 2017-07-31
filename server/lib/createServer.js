@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const { graphqlExpress, graphiqlExpress } = require('graphql-server-express');
 const { execute, subscribe } = require('graphql');
 const { createServer } = require('http');
+const cors = require('cors');
 
 const createMongo = require('./createMongoConnection');
 const schema = require('./schema');
@@ -25,7 +26,7 @@ module.exports = async (port) => {
   // TODO(rstankov): Add index
   // TODO(rstankov): Add health url
 
-  app.use('/graphql', bodyParser.json(), graphqlExpress(buildOptions));
+  app.use('/graphql', cors(), bodyParser.json(), graphqlExpress(buildOptions));
 
 
   // TODO(rstankov): Enable only in development

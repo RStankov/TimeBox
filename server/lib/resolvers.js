@@ -3,7 +3,7 @@ module.exports = {
     allClients: (_root, _args, { mongo }) => {
       return mongo.Clients.find({}).toArray();
     },
-    allTimelogs: (_root, _args, { mongo }) => {
+    allTimeLogs: (_root, _args, { mongo }) => {
       return mongo.TimeLogs.find({}).toArray();
     },
   },

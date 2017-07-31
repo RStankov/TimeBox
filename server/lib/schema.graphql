@@ -1,6 +1,6 @@
 type Query {
   allClients: [Client]!
-  allTimelogs: [TimeLog]!
+  allTimeLogs: [TimeLog]!
 }
 
 type Mutation {
