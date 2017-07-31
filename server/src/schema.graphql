@@ -1,6 +1,8 @@
 type Query {
   allClients: [Client]!
+  client(id: ID!): Client
   allTimeLogs: [TimeLog]!
+  timeLog(id: ID!): TimeLog
 }
 
 type Mutation {

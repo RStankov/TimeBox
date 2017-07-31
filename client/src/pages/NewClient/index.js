@@ -1,10 +1,10 @@
 import React from 'react';
 import { Header } from 'semantic-ui-react';
 
-export default function Client() {
+export default function Page() {
   return (
-    <div>
+    <article>
       <Header as='h1'>New Client</Header>
-    </div>
+    </article>
   );
 }

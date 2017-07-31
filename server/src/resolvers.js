@@ -3,8 +3,14 @@ module.exports = {
     allClients: (_root, _args, { mongo }) => {
       return mongo.Clients.find({}).toArray();
     },
+    client: (_root, args, { mongo }) => {
+      return mongo.Clients.findOne({ _id: mongo.id(args.id) });
+    },
     allTimeLogs: (_root, _args, { mongo }) => {
       return mongo.TimeLogs.find({}).toArray();
+    },
+    timeLog: (_root, args, { mongo }) => {
+      return mongo.TimeLogs.findOne({ _id: mongo.id(args.id) });
     },
   },
 
