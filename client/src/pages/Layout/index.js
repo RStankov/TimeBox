@@ -15,7 +15,7 @@ export function Layout({ children, data: { loading, allClients } }) {
     <Container fluid={false}>
       <Grid padded>
         <Grid.Row>
-          <Grid.Column width={3}>
+          <Grid.Column width={4}>
             <Menu fluid vertical size="massive">
               <Menu.Item header>
                 <Menu.Header>
