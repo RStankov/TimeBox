@@ -5,7 +5,7 @@ const { execute, subscribe } = require('graphql');
 const { createServer } = require('http');
 const cors = require('cors');
 
-const createMongo = require('./createMongoConnection');
+const createMongo = require('./createMongooseConnection');
 const schema = require('./schema');
 
 module.exports = async (port) => {
@@ -41,7 +41,7 @@ module.exports = async (port) => {
 
   const server = createServer(app);
   server.listen(port, () => {
-    console.log(`Hackernews GraphQL server running on port ${port}.`);
+    console.log(`GraphQL server running on port ${port}.`);
   });
 
   return app;

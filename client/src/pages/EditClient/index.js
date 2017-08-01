@@ -41,7 +41,7 @@ const MUTATION = gql`
       }
       errors {
         field
-        messages
+        message
       }
     }
   }

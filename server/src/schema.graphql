@@ -1,7 +1,6 @@
 type Query {
   allClients: [Client]!
   client(id: ID!): Client
-  allTimeLogs: [TimeLog]!
   timeLog(id: ID!): TimeLog
 }
 
@@ -15,7 +14,10 @@ type Mutation {
 }
 
 input CreateClientInput {
-  name: String!
+  name: String
+  hourlyRate: Int
+  active: Boolean
+  notes: String
 }
 
 type CreateClientPayload {
@@ -25,7 +27,10 @@ type CreateClientPayload {
 
 input UpdateClientInput {
   id: ID!
-  name: String!
+  name: String
+  hourlyRate: Int
+  active: Boolean
+  notes: String
 }
 
 type UpdateClientPayload {
@@ -44,7 +49,11 @@ type DestroyClientPayload {
 
 input CreateTimeLogInput {
   clientId: ID!
-  description: String!
+  date: String
+  startTime: String
+  endTime: String
+  billableHours: Float
+  description: String
 }
 
 type CreateTimeLogPayload {
@@ -54,7 +63,11 @@ type CreateTimeLogPayload {
 
 input UpdateTimeLogInput {
   id: ID!
-  description: String!
+  date: String
+  startTime: String
+  endTime: String
+  billableHours: Float
+  description: String
 }
 
 type UpdateTimeLogPayload {
@@ -73,17 +86,24 @@ type DestroyTimeLogPayload {
 
 type Error {
   field: String!
-  messages: [String]!
+  message: String!
 }
 
 type Client {
   id: ID!
   name: String!
+  hourlyRate: Int!
+  active: Boolean!
+  notes: String
   timeLogs: [TimeLog]!
 }
 
 type TimeLog {
   id: ID!
+  date: String!
+  startTime: String!
+  endTime: String!
+  billableHours: Float!
   description: String!
   clientId: ID!
   client: Client!

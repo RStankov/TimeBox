@@ -1,102 +1,51 @@
 module.exports = {
   Query: {
-    allClients: (_root, _args, { mongo }) => {
-      return mongo.Clients.find({}).toArray();
+    allClients(_root, _args, { mongo }) {
+      return mongo.Client.find();
     },
-    client: (_root, args, { mongo }) => {
-      return mongo.Clients.findOne({ _id: mongo.id(args.id) });
+    client(_root, { id }, { mongo }) {
+      return mongo.Client.findById(id);
     },
-    allTimeLogs: (_root, _args, { mongo }) => {
-      return mongo.TimeLogs.find({}).toArray();
-    },
-    timeLog: (_root, args, { mongo }) => {
-      return mongo.TimeLogs.findOne({ _id: mongo.id(args.id) });
+    timeLog(_root, { id }, { mongo }) {
+      return TimeLog.findById(id);
     },
   },
 
   Mutation: {
-    createClient: async (_root, { input }, { mongo }) => {
-      // TODO(rstankov): Validation
-      const response = await mongo.Clients.insert(input);
-
-      return {
-        node: Object.assign(input, { id: response.insertedIds[0] }),
-        errors: [],
-      };
+    createClient(_root, { input }, { mongo }) {
+      return mongo.create(mongo.Client, input);
     },
-    updateClient: async (_root, { input }, { mongo }) => {
-      // TODO(rstankov): Validation
-      // // TODO(rstankov): Remove `id` from input
-      const response = await mongo.Clients.update(
-        { _id: mongo.id(input.id) },
-        { $set: input },
-      );
-
-      const client = await mongo.Clients.findOne({ _id: mongo.id(input.id) });
-
-      return {
-        node: client,
-        errors: [],
-      };
+    updateClient(_root, { input }, { mongo }) {
+      return mongo.update(mongo.Client, input);
     },
-    destroyClient: async (_root, { input }, { mongo }) => {
-      // TODO(rstankov): Validation
-      const response = await mongo.Clients.deleteOne({
-        _id: mongo.id(input.id),
-      });
-
-      return {
-        errors: [],
-      };
+    destroyClient(_root, { input }, { mongo }) {
+      return mongo.destroy(model.Client, input);
     },
 
-    createTimeLog: async (_root, { input: { clientId, description } }, { mongo }) => {
-      // TODO(rstankov): Validation
-      const response = await mongo.TimeLogs.insert({ clientId: mongo.id(clientId), description });
-
-      return {
-        node: { clientId, description, _id: response.insertedIds[0] },
-        errors: [],
-      };
+    createTimeLog(_root, { input }, { mongo }) {
+      return mongo.create(mongo.TimeLog, input);
     },
-    updateTimeLog: async (_root, { input }, { mongo }) => {
-      // TODO(rstankov): Validation
-      // // TODO(rstankov): Remove `id` from input
-      const response = await mongo.TimeLogs.update(
-        { _id: mongo.id(input.id) },
-        { $set: input },
-      );
-
-      const client = await mongo.TimeLogs.findOne({ _id: mongo.id(input.id) });
-
-      return {
-        node: client,
-        errors: [],
-      };
+    updateTimeLog(_root, { input }, { mongo }) {
+      return mongo.update(mongo.TimeLog, input);
     },
-    destroyTimeLog: async (_root, { input }, { mongo }) => {
-      // TODO(rstankov): Validation
-      const response = await mongo.TimeLogs.deleteOne({
-        _id: mongo.id(input.id),
-      });
-
-      return {
-        errors: [],
-      };
+    destroyTimeLog(_root, { input }, { mongo }) {
+      return mongo.destroy(model.TimeLog, input);
     },
   },
 
   Client: {
     id: root => root._id,
-    timeLogs: async ({ _id }, _args, { mongo }) => {
-      return await mongo.TimeLogs.find({ clientId: mongo.id(_id) }).toArray();
+
+    timeLogs({ _id }, _args, { mongo }) {
+      return mongo.TimeLogs.find({ clientId: _id });
     },
   },
 
   TimeLog: {
     id: root => root._id,
-    client: async ({ clientId }, _args, { mongo }) => {
-      return await mongo.Clients.findOne({ _id: mongo.id(clientId) });
+
+    client({ clientId }, _args, { mongo }) {
+      return mongo.Client.findById(id);
     },
   },
 };
