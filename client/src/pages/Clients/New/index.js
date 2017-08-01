@@ -8,6 +8,7 @@ import { Form } from 'components/Form';
 import theme from 'utils/formTheme';
 import validations from 'utils/clientValidations';
 import paths from 'paths';
+import { addToCollection } from 'utils/graphql';
 
 const fields = {
   name: '',
@@ -31,7 +32,7 @@ export function Page({ submit, afterSubmit }) {
 }
 
 const MUTATION = gql`
-  mutation CreateClient($input: CreateClientInput!) {
+  mutation ClientsNewPage($input: CreateClientInput!) {
     response: createClient(input: $input) {
       node {
         id
@@ -51,6 +52,9 @@ export default connect(null, { push })(
       async submit(input) {
         const { data: { response } } = await mutate({
           variables: { input },
+          updateQueries: {
+            Layout: addToCollection('allClients'),
+          },
         });
         return response;
       },

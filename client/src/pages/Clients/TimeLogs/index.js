@@ -75,7 +75,7 @@ export function Page({ data: { loading, client } }) {
 }
 
 const QUERY = gql`
-  query ClientPage($id: ID!) {
+  query ClientsTimeLogsPage($id: ID!) {
     client(id: $id) {
       id
       name

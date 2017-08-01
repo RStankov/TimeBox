@@ -8,6 +8,7 @@ import { Form } from 'components/Form';
 import theme from 'utils/formTheme';
 import validations from 'utils/clientValidations';
 import paths from 'paths';
+import DeleteButton from './DeleteButton';
 
 export function Page({ submit, afterSubmit, data: { loading, client } }) {
   if (loading) {
@@ -28,6 +29,10 @@ export function Page({ submit, afterSubmit, data: { loading, client } }) {
         <Form.Field name="name" />
         <Form.Submit>Update</Form.Submit>
       </Form>
+      <hr />
+      <p>
+        <DeleteButton client={client} />
+      </p>
     </article>
   );
 }
@@ -48,7 +53,7 @@ const MUTATION = gql`
 `;
 
 const QUERY = gql`
-  query ClientPage($id: ID!) {
+  query ClientsEditPage($id: ID!) {
     client(id: $id) {
       id
       name

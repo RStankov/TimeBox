@@ -41,7 +41,7 @@ module.exports = {
   },
 
   async destroy(model, { id }) {
-    await mongo.Client.findByIdAndRemove(input.id);
+    await model.findByIdAndRemove(id);
 
     return {
       errors: [],
