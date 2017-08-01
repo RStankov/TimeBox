@@ -16,7 +16,6 @@ type Mutation {
 input CreateClientInput {
   name: String
   hourlyRate: Int
-  active: Boolean
   notes: String
 }
 
@@ -29,7 +28,6 @@ input UpdateClientInput {
   id: ID!
   name: String
   hourlyRate: Int
-  active: Boolean
   notes: String
 }
 
@@ -52,7 +50,7 @@ input CreateTimeLogInput {
   date: String
   startTime: String
   endTime: String
-  billableHours: Float
+  billableHours: String
   description: String
 }
 
@@ -66,7 +64,7 @@ input UpdateTimeLogInput {
   date: String
   startTime: String
   endTime: String
-  billableHours: Float
+  billableHours: String
   description: String
 }
 
@@ -93,7 +91,6 @@ type Client {
   id: ID!
   name: String!
   hourlyRate: Int!
-  active: Boolean!
   notes: String
   timeLogs: [TimeLog]!
 }

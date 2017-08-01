@@ -6,7 +6,7 @@ import { createTheme } from 'components/Form';
 
 export default createTheme({
   inputs: {
-    textarea: FormUI.Textarea,
+    textarea: FormUI.TextArea,
     select: FormUI.Select,
     text: Input,
   },

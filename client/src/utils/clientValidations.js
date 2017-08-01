@@ -4,6 +4,9 @@ function isRequired(value) {
   }
 }
 
+const minValue = min => v => parseFloat(v, 10) > min ? null : `should be more than ${ min }`;
+
 export default {
   name: [isRequired],
+  hourlyRate: [isRequired, minValue(-1)],
 };

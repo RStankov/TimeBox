@@ -15,10 +15,6 @@ const ClientSchema = new Schema({
     default: 0,
     min: [0, 'should be more than 0'],
   },
-  active: {
-    type: Boolean,
-    default: true,
-  },
   notes: {
     type: String,
     default: '',
@@ -36,8 +32,9 @@ const TimeLogSchema = new Schema({
     default: '',
   },
   date: {
-    type: Date,
+    type: String,
     required: true,
+    match: [/\d{4}-\d{2}-\d{2}/, 'should be in 0000-00-00 format'],
   },
   startTime: {
     type: String,

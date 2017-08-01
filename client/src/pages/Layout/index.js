@@ -27,7 +27,7 @@ export function Layout({ children, data: { loading, allClients } }) {
                     size="mini"
                     floated="right"
                     style={{ position: 'relative', top: -5, right: -5 }}>
-                    <Link to={paths.newClient()}>
+                    <Link to={paths.clients.new()}>
                       <Icon name="add" style={{ margin: 0 }} />
                     </Link>
                   </Button>
@@ -36,7 +36,7 @@ export function Layout({ children, data: { loading, allClients } }) {
                 <Menu.Menu>
                   {allClients.map(client =>
                     <Menu.Item active={true} key={client.id}>
-                      <Link to={paths.client(client)}>
+                      <Link to={paths.clients.show(client)}>
                         {client.name}
                       </Link>
                     </Menu.Item>,

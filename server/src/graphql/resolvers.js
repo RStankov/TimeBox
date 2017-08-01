@@ -37,7 +37,7 @@ module.exports = {
     id: root => root._id,
 
     timeLogs({ _id }, _args, { db }) {
-      return db.TimeLogs.find({ clientId: _id });
+      return db.TimeLog.find({ clientId: _id }).sort({ date: -1 });
     },
   },
 

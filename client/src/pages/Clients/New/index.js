@@ -25,6 +25,8 @@ export function Page({ submit, afterSubmit }) {
         afterSubmit={afterSubmit}
         theme={theme}>
         <Form.Field name="name" />
+        <Form.Field name="hourlyRate" label="Hourly rate" input="number" />
+        <Form.Field name="notes" input="textarea" />
         <Form.Submit>Create</Form.Submit>
       </Form>
     </article>
@@ -59,7 +61,7 @@ export default connect(null, { push })(
         return response;
       },
       afterSubmit(node) {
-        ownProps.push(paths.client(node));
+        ownProps.push(paths.clients.show(node));
       },
     }),
   })(Page),
