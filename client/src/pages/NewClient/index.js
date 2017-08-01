@@ -18,7 +18,7 @@ export function Page({ submit, afterSubmit }) {
     <article>
       <Header as="h1">New Client</Header>
       <Form
-        fields={fields}
+        defaultValues={fields}
         validations={validations}
         submit={submit}
         afterSubmit={afterSubmit}

@@ -8,6 +8,9 @@ import {
   Icon,
   Table,
 } from 'semantic-ui-react';
+import { Link } from 'react-router';
+
+import paths from 'paths';
 
 export function Page({ data: { loading, client } }) {
   if (loading) {
@@ -21,10 +24,14 @@ export function Page({ data: { loading, client } }) {
       </Header>
 
       <Menu>
-        <Menu.Item name="Time Logs" active={true} />
+        <Menu.Item active={true}>
+          <Link to={paths.client(client)}>Time Logs</Link>
+        </Menu.Item>
         <Menu.Item name="Invoices" />
         <Menu.Item name="Information" />
-        <Menu.Item name="Edit" />
+        <Menu.Item>
+          <Link to={paths.editClient(client)}>Edit</Link>
+        </Menu.Item>
       </Menu>
 
       <Table celled compact>

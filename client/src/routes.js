@@ -23,5 +23,8 @@ export default [{
   }, {
     path: '/clients/:id',
     getComponent: load(() => import('./pages/Client')),
+  }, {
+    path: '/clients/:id/edit',
+    getComponent: load(() => import('./pages/EditClient')),
   }]
 }];
