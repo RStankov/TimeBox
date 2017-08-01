@@ -5,17 +5,17 @@ const { execute, subscribe } = require('graphql');
 const { createServer } = require('http');
 const cors = require('cors');
 
-const createMongo = require('./createMongooseConnection');
-const schema = require('./schema');
+const createDatabase = require('./db');
+const schema = require('./graphql');
 
-module.exports = async ({ port, mongoUrl }) => {
-  const mongo = await createMongo(mongoUrl);
+module.exports = async ({ port, databaseUrl }) => {
+  const db = await createDatabase(databaseUrl);
 
   // TODO(rstankov): Move to middlewares
   const buildOptions = async (req, res) => {
     return {
       context: {
-        mongo
+        db
       },
       schema,
     };
