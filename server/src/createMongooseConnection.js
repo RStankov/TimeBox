@@ -8,9 +8,6 @@ mongoose.set('debug', true);
 
 const _ = require('lodash');
 
-// TODO(rstankov): Move to ENV
-const MONGO_URL = 'mongodb://127.0.0.1:27017/hackernews';
-
 const ClientSchema = new Schema({
   name: {
     type: String,
@@ -101,8 +98,8 @@ function mapErrors(err) {
   }));
 }
 
-module.exports = async () => {
-  await mongoose.connect('mongodb://localhost/myapp', {
+module.exports = async (url) => {
+  await mongoose.connect(url, {
     useMongoClient: true,
   });
 

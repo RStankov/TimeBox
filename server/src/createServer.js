@@ -8,8 +8,8 @@ const cors = require('cors');
 const createMongo = require('./createMongooseConnection');
 const schema = require('./schema');
 
-module.exports = async (port) => {
-  const mongo = await createMongo();
+module.exports = async ({ port, mongoUrl }) => {
+  const mongo = await createMongo(mongoUrl);
 
   // TODO(rstankov): Move to middlewares
   const buildOptions = async (req, res) => {
