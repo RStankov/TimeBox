@@ -1,14 +1,13 @@
 import React from 'react';
 import { Header } from 'semantic-ui-react';
 import { graphql, gql } from 'react-apollo';
-import { push } from 'react-router-redux';
-import { connect } from 'react-redux';
 
 import { Form } from 'components/Form';
 import theme from 'utils/formTheme';
 import validations from 'utils/clientValidations';
 import paths from 'paths';
 import { addToCollection } from 'utils/graphql';
+import withPush from 'utils/withPush';
 
 const fields = {
   name: '',
@@ -48,7 +47,7 @@ const MUTATION = gql`
   }
 `;
 
-export default connect(null, { push })(
+export default withPush(
   graphql(MUTATION, {
     props: ({ ownProps, mutate }) => ({
       async submit(input) {

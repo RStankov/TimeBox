@@ -1,8 +1,6 @@
 import React from 'react';
 import { Header, Loader } from 'semantic-ui-react';
 import { graphql, gql } from 'react-apollo';
-import { push } from 'react-router-redux';
-import { connect } from 'react-redux';
 import _ from 'lodash';
 import { Link } from 'react-router';
 
@@ -11,6 +9,7 @@ import theme from 'utils/formTheme';
 import validations from 'utils/timeLogValidations';
 import paths from 'paths';
 import DeleteButton from './DeleteButton';
+import withPush from 'utils/withPush';
 
 export function Page({ submit, afterSubmit, data: { loading, timeLog } }) {
   if (loading) {
@@ -96,7 +95,7 @@ const QUERY = gql`
 export default graphql(QUERY, {
   options: ({ params }) => ({ variables: { id: params.id } }),
 })(
-  connect(null, { push })(
+  withPush(
     graphql(MUTATION, {
       props: ({ ownProps, mutate }) => ({
         async submit(input) {

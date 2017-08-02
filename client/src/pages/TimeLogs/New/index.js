@@ -1,13 +1,12 @@
 import React from 'react';
 import { Header, Loader } from 'semantic-ui-react';
 import { graphql, gql } from 'react-apollo';
-import { push } from 'react-router-redux';
-import { connect } from 'react-redux';
 
 import { Form } from 'components/Form';
 import theme from 'utils/formTheme';
 import validations from 'utils/timeLogValidations';
 import paths from 'paths';
+import withPush from 'utils/withPush';
 
 const fields = { startTime: '',  endTime: '', billableHours: 0, description: '' };
 
@@ -63,7 +62,7 @@ const QUERY = gql`
 export default graphql(QUERY, {
   options: ({ params }) => ({ variables: { clientId: params.clientId } }),
 })(
-  connect(null, { push })(
+  withPush(
     graphql(MUTATION, {
       props: ({ ownProps, mutate }) => ({
         async submit(input) {

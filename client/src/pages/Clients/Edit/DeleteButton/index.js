@@ -1,10 +1,9 @@
 import React from 'react';
 import { graphql, gql } from 'react-apollo';
-import { push } from 'react-router-redux';
-import { connect } from 'react-redux';
 
 import paths from 'paths';
 import { removeFromCollection } from 'utils/graphql';
+import withPush from 'utils/withPush';
 
 export function Button({ destroy }) {
   return <button onClick={destroy}>Delete</button>;
@@ -21,7 +20,7 @@ const MUTATION = gql`
   }
 `;
 
-export default connect(null, { push })(
+export default withPush(
   graphql(MUTATION, {
     props: ({ ownProps, mutate }) => ({
       async destroy() {
