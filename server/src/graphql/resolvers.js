@@ -45,7 +45,7 @@ module.exports = {
     id: root => root._id,
 
     client({ clientId }, _args, { db }) {
-      return db.Client.findById(id);
+      return db.Client.findById(clientId);
     },
   },
 };

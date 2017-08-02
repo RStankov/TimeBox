@@ -32,5 +32,8 @@ export default [{
   }, {
     path: '/clients/:clientId/time-logs/new',
     getComponent: load(() => import('./pages/TimeLogs/New')),
+  }, {
+    path: '/time-logs/:id/edit',
+    getComponent: load(() => import('./pages/TimeLogs/Edit')),
   }]
 }];

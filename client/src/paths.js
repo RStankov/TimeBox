@@ -8,5 +8,6 @@ export default {
   },
   timeLogs: {
     new({ id }) { return `/clients/${ id }/time-logs/new`; },
+    edit({ id }) { return `/time-logs/${ id }/edit`; },
   }
 }

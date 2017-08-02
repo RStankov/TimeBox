@@ -63,7 +63,9 @@ export function Page({ data: { loading, client } }) {
               </Table.Cell>
               <Table.Cell>
                 <Button icon size="small">
-                  <Icon name="edit" />
+                  <Link to={paths.timeLogs.edit(timeLog)}>
+                    <Icon name="edit" />
+                  </Link>
                 </Button>
               </Table.Cell>
             </Table.Row>,
