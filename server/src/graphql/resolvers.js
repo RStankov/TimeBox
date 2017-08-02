@@ -4,10 +4,10 @@ module.exports = {
       return db.Client.find();
     },
     client(_root, { id }, { db }) {
-      return db.Client.findById(id);
+      return db.Client.findOne({ _id: id });
     },
     timeLog(_root, { id }, { db }) {
-      return db.TimeLog.findById(id);
+      return db.TimeLog.findOne({ _id: id });
     },
   },
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Header, Loader } from 'semantic-ui-react';
-import { graphql, gql } from 'react-apollo';
+import { Header } from 'semantic-ui-react';
+import { graphql, gql, compose } from 'react-apollo';
 import _ from 'lodash';
 import { Link } from 'react-router';
 
@@ -10,12 +10,9 @@ import validations from 'utils/timeLogValidations';
 import paths from 'paths';
 import DeleteButton from './DeleteButton';
 import withPush from 'utils/withPush';
+import withPage from 'utils/withPage';
 
-export function Page({ submit, afterSubmit, data: { loading, timeLog } }) {
-  if (loading) {
-    return <Loader active inline="centered" />;
-  }
-
+export function Page({ submit, afterSubmit, data: { timeLog } }) {
   const fields = _.pick(timeLog, [
     'date',
     'startTime',
@@ -92,24 +89,23 @@ const QUERY = gql`
   ${FRAGMENT}
 `;
 
-export default graphql(QUERY, {
-  options: ({ params }) => ({ variables: { id: params.id } }),
-})(
-  withPush(
-    graphql(MUTATION, {
-      props: ({ ownProps, mutate }) => ({
-        async submit(input) {
-          const { data: { response } } = await mutate({
-            variables: { input: { ...input, id: ownProps.params.id } },
-          });
-          return response;
-        },
-        afterSubmit(node) {
-          ownProps.push(
-            paths.clients.show(ownProps.data.timeLog.client),
-          );
-        },
-      }),
-    })(Page),
-  ),
-);
+export default compose(
+  withPush,
+  graphql(QUERY, {
+    options: ({ params }) => ({ variables: { id: params.id } }),
+  }),
+  withPage('timeLog'),
+  graphql(MUTATION, {
+    props: ({ ownProps, mutate }) => ({
+      async submit(input) {
+        const { data: { response } } = await mutate({
+          variables: { input: { ...input, id: ownProps.params.id } },
+        });
+        return response;
+      },
+      afterSubmit(node) {
+        ownProps.push(paths.clients.show(ownProps.data.timeLog.client));
+      },
+    }),
+  }),
+)(Page);
