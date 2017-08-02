@@ -1,5 +1,4 @@
 import React from 'react';
-import { Header } from 'semantic-ui-react';
 import { graphql, gql, compose } from 'react-apollo';
 import _ from 'lodash';
 import { Link } from 'react-router';
@@ -9,6 +8,7 @@ import theme from 'utils/formTheme';
 import validations from 'utils/timeLogValidations';
 import paths from 'paths';
 import DeleteButton from './DeleteButton';
+import Title from 'components/Title'
 import withPush from 'utils/withPush';
 import withPage from 'utils/withPage';
 
@@ -23,9 +23,9 @@ export function Page({ submit, afterSubmit, data: { timeLog } }) {
 
   return (
     <article>
-      <Header as="h1">
+      <Title>
         Edit time log for {timeLog.client.name}
-      </Header>
+      </Title>
       <Form
         defaultValues={fields}
         validations={validations}
