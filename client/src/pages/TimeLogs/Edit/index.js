@@ -4,35 +4,50 @@ import { graphql, gql } from 'react-apollo';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import { Link } from 'react-router';
 
 import { Form } from 'components/Form';
 import theme from 'utils/formTheme';
 import validations from 'utils/timeLogValidations';
 import paths from 'paths';
+import DeleteButton from './DeleteButton';
 
 export function Page({ submit, afterSubmit, data: { loading, timeLog } }) {
   if (loading) {
     return <Loader active inline="centered" />;
   }
 
-  const fields = _.pick(timeLog, ['date', 'startTime', 'endTime', 'billableHours', 'description']);
+  const fields = _.pick(timeLog, [
+    'date',
+    'startTime',
+    'endTime',
+    'billableHours',
+    'description',
+  ]);
 
   return (
     <article>
-      <Header as="h1">Edit time log for {timeLog.client.name}</Header>
+      <Header as="h1">
+        Edit time log for {timeLog.client.name}
+      </Header>
       <Form
         defaultValues={fields}
         validations={validations}
         submit={submit}
         afterSubmit={afterSubmit}
         theme={theme}>
-        <Form.Field name="date" placeholder="0000-00-00"/>
+        <Form.Field name="date" placeholder="0000-00-00" />
         <Form.Field name="startTime" label="startTime" placeholder="00:00" />
         <Form.Field name="endTime" label="End time" placeholder="00:00" />
         <Form.Field name="billableHours" />
         <Form.Field name="description" input="textarea" />
-        <Form.Submit>Update</Form.Submit>
+        <Form.Submit>Update</Form.Submit>&nbsp;or&nbsp;
+        <Link to={paths.clients.show(timeLog.client)}>Cancel</Link>
       </Form>
+      <hr />
+      <p>
+        <DeleteButton timeLog={timeLog} />
+      </p>
     </article>
   );
 }
@@ -46,7 +61,7 @@ const FRAGMENT = gql`
     billableHours
     description
   }
-`
+`;
 
 const MUTATION = gql`
   mutation UpdateTimeLog($input: UpdateTimeLogInput!) {
@@ -69,7 +84,6 @@ const QUERY = gql`
     timeLog(id: $id) {
       id
       ...TimeLogsEditForm
-      clientId
       client {
         id
         name
@@ -92,12 +106,11 @@ export default graphql(QUERY, {
           return response;
         },
         afterSubmit(node) {
-          ownProps.push(paths.clients.show({ id: ownProps.data.timeLog.clientId }));
+          ownProps.push(
+            paths.clients.show(ownProps.data.timeLog.client),
+          );
         },
       }),
     })(Page),
   ),
 );
-
-
-
