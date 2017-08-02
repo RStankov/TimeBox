@@ -1,24 +1,18 @@
 import React from 'react';
-import { graphql, gql } from 'react-apollo';
-import {
-  Header,
-  Loader,
-  Menu,
-} from 'semantic-ui-react';
+import { graphql, gql, compose } from 'react-apollo';
+import { Menu } from 'semantic-ui-react';
 import { Link } from 'react-router';
 
 import paths from 'paths';
+import Title from 'components/Title';
+import withPage from 'utils/withPage';
 
-export function Page({ data: { loading, client } }) {
-  if (loading) {
-    return <Loader active inline="centered" />;
-  }
-
+export function Page({ data: { client } }) {
   return (
     <article>
-      <Header as="h1">
+      <Title>
         {client.name}
-      </Header>
+      </Title>
 
       <Menu>
         <Menu.Item>
@@ -57,6 +51,9 @@ const QUERY = gql`
   }
 `;
 
-export default graphql(QUERY, {
-  options: ({ params }) => ({ variables: { id: params.id } }),
-})(Page);
+export default compose(
+  graphql(QUERY, {
+    options: ({ params }) => ({ variables: { id: params.id } }),
+  }),
+  withPage('client'),
+)(Page);

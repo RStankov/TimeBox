@@ -1,5 +1,5 @@
 import React from 'react';
-import { graphql, gql } from 'react-apollo';
+import { graphql, gql, compose } from 'react-apollo';
 
 import paths from 'paths';
 import { removeFromCollection } from 'utils/graphql';
@@ -20,7 +20,8 @@ const MUTATION = gql`
   }
 `;
 
-export default withPush(
+export default compose(
+  withPush,
   graphql(MUTATION, {
     props: ({ ownProps, mutate }) => ({
       async destroy() {
@@ -38,5 +39,5 @@ export default withPush(
         ownProps.push(paths.dashboard());
       },
     }),
-  })(Button),
-);
+  }),
+)(Button);

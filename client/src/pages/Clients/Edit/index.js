@@ -1,6 +1,5 @@
 import React from 'react';
-import { Header, Loader } from 'semantic-ui-react';
-import { graphql, gql } from 'react-apollo';
+import { graphql, gql, compose } from 'react-apollo';
 import _ from 'lodash';
 
 import { Form } from 'components/Form';
@@ -9,17 +8,15 @@ import validations from 'utils/clientValidations';
 import paths from 'paths';
 import DeleteButton from './DeleteButton';
 import withPush from 'utils/withPush';
+import Title from 'components/Title';
+import withPage from 'utils/withPage';
 
 export function Page({ submit, afterSubmit, data: { loading, client } }) {
-  if (loading) {
-    return <Loader active inline="centered" />;
-  }
-
   const fields = _.pick(client, ['name', 'hourlyRate', 'notes']);
 
   return (
     <article>
-      <Header as="h1">Edit Client</Header>
+      <Title>Edit Client</Title>
       <Form
         defaultValues={fields}
         validations={validations}
@@ -67,25 +64,25 @@ const QUERY = gql`
   }
 `;
 
-export default graphql(QUERY, {
-  options: ({ params }) => ({
-    variables: { id: params.id },
+export default compose(
+  graphql(QUERY, {
+    options: ({ params }) => ({
+      variables: { id: params.id },
+    }),
   }),
-})(
-  withPush(
-    graphql(MUTATION, {
-      props: ({ ownProps, mutate }) => ({
-        async submit(input) {
-          const { data: { response } } = await mutate({
-            variables: { input: { ...input, id: ownProps.params.id } },
-          });
-          return response;
-        },
-        afterSubmit(node) {
-          ownProps.push(paths.clients.show(node));
-        },
-      }),
-    })(Page),
-  ),
-);
-
+  withPage('client'),
+  withPush,
+  graphql(MUTATION, {
+    props: ({ ownProps, mutate }) => ({
+      async submit(input) {
+        const { data: { response } } = await mutate({
+          variables: { input: { ...input, id: ownProps.params.id } },
+        });
+        return response;
+      },
+      afterSubmit(node) {
+        ownProps.push(paths.clients.show(node));
+      },
+    }),
+  }),
+)(Page);

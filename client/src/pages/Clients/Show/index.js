@@ -1,15 +1,13 @@
 import React from 'react';
-import { graphql, gql } from 'react-apollo';
-import { Header, Loader, Menu, Button, Icon, Table } from 'semantic-ui-react';
+import { graphql, gql, compose } from 'react-apollo';
+import { Menu, Button, Icon, Table } from 'semantic-ui-react';
 import { Link } from 'react-router';
 
 import paths from 'paths';
+import Title from 'components/Title';
+import withPage from 'utils/withPage';
 
 export function Page({ data: { loading, client } }) {
-  if (loading) {
-    return <Loader active inline="centered" />;
-  }
-
   const sum = client.timeLogs.reduce(
     (acc, { billableHours }) => acc + billableHours,
     0,
@@ -17,9 +15,9 @@ export function Page({ data: { loading, client } }) {
 
   return (
     <article>
-      <Header as="h1">
+      <Title>
         {client.name}
-      </Header>
+      </Title>
 
       <Menu>
         <Menu.Item active={true}>
@@ -34,9 +32,9 @@ export function Page({ data: { loading, client } }) {
       </Menu>
 
       {!client.timeLogs.length &&
-          <center>
-            <Link to={paths.timeLogs.new(client)}>Add the first time log</Link>
-          </center>}
+        <center>
+          <Link to={paths.timeLogs.new(client)}>Add the first time log</Link>
+        </center>}
       {!!client.timeLogs.length &&
         <Table celled compact>
           <Table.Header fullWidth>
@@ -108,9 +106,12 @@ const QUERY = gql`
   }
 `;
 
-export default graphql(QUERY, {
-  options: ({ params }) => ({
-    variables: { id: params.id },
-    fetchPolicy: 'network-only',
+export default compose(
+  graphql(QUERY, {
+    options: ({ params }) => ({
+      variables: { id: params.id },
+      fetchPolicy: 'network-only',
+    }),
   }),
-})(Page);
+  withPage('client'),
+)(Page);

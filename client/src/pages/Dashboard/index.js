@@ -1,9 +1,11 @@
 import React from 'react';
 
+import Title from 'components/Title';
+
 export default function Page() {
   return (
     <article>
-      <h1>Dashboard</h1>
+      <Title>Dashboard</Title>
     </article>
   );
 }

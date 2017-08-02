@@ -1,6 +1,5 @@
 import React from 'react';
-import { Header } from 'semantic-ui-react';
-import { graphql, gql } from 'react-apollo';
+import { graphql, gql, compose } from 'react-apollo';
 
 import { Form } from 'components/Form';
 import theme from 'utils/formTheme';
@@ -8,6 +7,7 @@ import validations from 'utils/clientValidations';
 import paths from 'paths';
 import { addToCollection } from 'utils/graphql';
 import withPush from 'utils/withPush';
+import Title from 'components/Title';
 
 const fields = {
   name: '',
@@ -16,7 +16,7 @@ const fields = {
 export function Page({ submit, afterSubmit }) {
   return (
     <article>
-      <Header as="h1">New Client</Header>
+      <Title>New Client</Title>
       <Form
         defaultValues={fields}
         validations={validations}
@@ -47,7 +47,8 @@ const MUTATION = gql`
   }
 `;
 
-export default withPush(
+export default compose(
+  withPush,
   graphql(MUTATION, {
     props: ({ ownProps, mutate }) => ({
       async submit(input) {
@@ -63,5 +64,5 @@ export default withPush(
         ownProps.push(paths.clients.show(node));
       },
     }),
-  })(Page),
-);
+  }),
+)(Page);
